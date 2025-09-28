@@ -1,60 +1,45 @@
 package dev.zprestige.prestige.api.mixin;
 
 import dev.zprestige.prestige.api.interfaces.IExplosion;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.world.explosion.ExplosionImpl;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(value={Explosion.class})
-public class MixinExplosion implements IExplosion {
-    @Shadow
-    @Final
-    @Mutable
-    public World getWorld();
-    @Shadow
-    @Final
-    @Mutable
-    public Entity getEntity();
-    @Shadow
-    @Final
-    @Mutable
-    public double getPosition().y;
-    @Shadow
-    @Final
-    @Mutable
-    public double getPosition().x;
-    @Shadow
-    @Final
-    @Mutable
-    public double getPosition().z;
-    @Shadow
-    @Final
-    @Mutable
-    public float getPower();
-    @Shadow
-    @Final
-    @Mutable
-    public boolean canTriggerBlocks();
-    @Shadow
-    @Final
-    @Mutable
-    public Explosion.DestructionType getDestructionType();
+@Mixin(ExplosionImpl.class)
+public abstract class MixinExplosionImpl implements IExplosion {
 
+    // === Accessors for private final fields in ExplosionImpl ===
+    @Accessor("power")
+    public abstract void setPower(float value);
+
+    @Accessor("pos")
+    public abstract void setPos(Vec3d pos);
+
+    @Accessor("world")
+    public abstract void setWorld(ServerWorld world);
+
+    @Accessor("entity")
+    public abstract void setEntity(@Nullable Entity entity);
+
+    @Accessor("destructionType")
+    public abstract void setDestructionType(Explosion.DestructionType type);
+
+    @Accessor("createFire")
+    public abstract void setCreateFire(boolean createFire);
+
+    // === IExplosion implementation ===
     @Override
     public void set(Vec3d vec3d, float f, boolean bl) {
-        world = MinecraftClient.getInstance().world;
-        entity = null;
-        x = vec3d.x;
-        y = vec3d.y;
-        z = vec3d.z;
-        power = f;
-        createFire = bl;
-        destructionType = Explosion.DestructionType.DESTROY;
+        setWorld(MinecraftClient.getInstance().world);
+        setPos(vec3d);
+        setPower(f);
+        setCreateFire(bl);
+        setDestructionType(Explosion.DestructionType.DESTROY);
+        setEntity(null);
     }
 }
