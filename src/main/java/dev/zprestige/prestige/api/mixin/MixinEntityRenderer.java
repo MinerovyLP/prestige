@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value={EntityRenderer.class}, priority=999)
 public abstract class MixinEntityRenderer {
-    @Overwrite
+    /*@Overwrite
     public void render(Entity entity, float n, float n2, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int n3) {
         if (hasLabel(entity)) {
             String name = entity.getDisplayName().getString();
@@ -43,10 +43,10 @@ public abstract class MixinEntityRenderer {
             }
             renderLabelIfPresent(entity, entity.getDisplayName(), matrixStack, vertexConsumerProvider, n3);
         }
-    }
+    }*/
 
     @Shadow
-    abstract boolean hasLabel(Entity var1);
+    abstract boolean hasLabel(Entity var1, double var2);
 
     @Inject(at={@At(value="HEAD")}, method={"renderLabelIfPresent"}, cancellable=true)
     void renderLabelIfPresent(Entity entity, Text text, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int n, CallbackInfo callbackInfo) {

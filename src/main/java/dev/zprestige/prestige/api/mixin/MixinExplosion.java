@@ -16,35 +16,35 @@ public class MixinExplosion implements IExplosion {
     @Shadow
     @Final
     @Mutable
-    public World world;
+    public World getWorld();
     @Shadow
     @Final
     @Mutable
-    public Entity entity;
+    public Entity getEntity();
     @Shadow
     @Final
     @Mutable
-    public double y;
+    public double getPosition().y;
     @Shadow
     @Final
     @Mutable
-    public double x;
+    public double getPosition().x;
     @Shadow
     @Final
     @Mutable
-    public double z;
+    public double getPosition().z;
     @Shadow
     @Final
     @Mutable
-    public float power;
+    public float getPower();
     @Shadow
     @Final
     @Mutable
-    public boolean createFire;
+    public boolean canTriggerBlocks();
     @Shadow
     @Final
     @Mutable
-    public Explosion.DestructionType destructionType;
+    public Explosion.DestructionType getDestructionType();
 
     @Override
     public void set(Vec3d vec3d, float f, boolean bl) {

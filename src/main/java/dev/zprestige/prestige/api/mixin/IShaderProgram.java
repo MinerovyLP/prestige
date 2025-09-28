@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(value={ShaderProgram.class})
 public interface IShaderProgram {
-    @Accessor(value="loadedUniforms")
+    @Accessor(value="uniformsByName")
     Map getUniformsHook();
 }

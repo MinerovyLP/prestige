@@ -23,6 +23,10 @@ public abstract class MixinLivingEntity extends Entity implements Attackable {
     @Shadow
     abstract float getJumpVelocity();
 
+    /**
+    * @author test
+    * @reason Custom jump logic
+    */
     @Overwrite
     public void jump() {
         Vec3d vec3d = getVelocity();

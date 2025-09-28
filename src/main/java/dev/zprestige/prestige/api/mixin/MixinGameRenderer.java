@@ -1,7 +1,6 @@
 package dev.zprestige.prestige.api.mixin;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.gl.ShaderStage;
 import net.minecraft.util.hit.HitResult;
 import dev.zprestige.prestige.client.event.impl.TiltEvent;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
@@ -60,7 +59,7 @@ public class MixinGameRenderer
      * @reason
      */
     @Overwrite
-    public void updateTargetedEntity(float tickDelta) {
+    public void updateCrosshairTarget(float tickDelta) {
         Entity entity = client.getCameraEntity();
         if (entity == null || client.world == null) {
             return;
@@ -136,7 +135,7 @@ public class MixinGameRenderer
     }
 
     @Inject(method = "loadPrograms", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD)
-    void loadAllTheShaders(ResourceFactory factory, CallbackInfo ci, List<ShaderStage> stages, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shadersToLoad) {
+    void loadAllTheShaders(ResourceFactory factory, CallbackInfo ci, List<Pair<ShaderProgram, Consumer<ShaderProgram>>> shadersToLoad) {
         GlProgram.forEachProgram(loader -> shadersToLoad.add(new Pair<>(loader.getLeft().apply(factory), loader.getRight())));
     }
 

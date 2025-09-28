@@ -23,7 +23,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import net.minecraft.client.render.BlockBreakingInfo;
+import net.minecraft.client.render.WorldRenderer.BlockBreakingInfo;
 import net.minecraft.client.render.Frustum;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
